@@ -1,0 +1,46 @@
+{% extends "drf_spectacular/swagger_ui.html" %}
+{% block extra_content %}
+  <div id="user-info" style="position:absolute; top:10px; right:10px; font-size:14px; z-index:9999;">
+    <span style="color:gray;">Checking login...</span>
+  </div>
+  <script>
+    window.onload = function () {
+      function checkAuth() {
+        const token = localStorage.getItem("access_token");
+        const userInfoDiv = document.getElementById("user-info");
+
+        if (token) {
+          // Example: fetch username from backend
+          fetch("/auth/user/", {
+            headers: { "Authorization": "Bearer " + token }
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data.username) {
+                userInfoDiv.innerHTML = `
+                  Logged in as <b>${data.username}</b>
+                  <button onclick="logout()" style="margin-left:10px;">Logout</button>
+                `;
+              } else {
+                userInfoDiv.innerHTML = "Logged in ✅ (user info unavailable)";
+              }
+            })
+            .catch(() => {
+              userInfoDiv.innerHTML = "Logged in ✅ (couldn't fetch user)";
+            });
+        } else {
+          userInfoDiv.innerHTML = `<span style="color:gray;">Not logged in</span>`;
+        }
+      }
+
+      window.logout = function () {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        document.getElementById("user-info").innerHTML = `<span style="color:gray;">Not logged in</span>`;
+        alert("Logged out from Swagger UI");
+      };
+
+      checkAuth();
+    };
+  </script>
+{% endblock %}
