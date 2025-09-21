@@ -10,11 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import warnings
 from pathlib import Path
-
+from dotenv import load_dotenv
+from os import getenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+load_dotenv(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -49,7 +53,6 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.github",
-
     "store",
 ]
 
@@ -67,6 +70,8 @@ DJ_REST_AUTH = {
     "JWT_AUTH_REFRESH_COOKIE": "refresh",
 }
 
+ATSK_API=getenv("ATSK_API")
+ATSK_USERNAME=getenv("ATSK_USERNAME")
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",  
@@ -117,7 +122,7 @@ SPECTACULAR_SETTINGS = {
             "scheme": "bearer",
             "bearerFormat": "JWT",
         },
-        "cookieAuth": {  # 👈 session/cookie auth
+        "cookieAuth": {
             "type": "apiKey",
             "in": "cookie",
             "name": "sessionid",
@@ -197,3 +202,24 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#warnig to filter the deprcation warnings
+
+
+warnings.filterwarnings(
+    "ignore",
+    message=".*USERNAME_REQUIRED is deprecated.*",
+    category=UserWarning,
+)
+
+warnings.filterwarnings(
+    "ignore",
+    message=".*EMAIL_REQUIRED is deprecated.*",
+    category=UserWarning,
+)
+
+warnings.filterwarnings(
+    "ignore",
+    message=".*ACCOUNT_LOGIN_METHODS conflicts.*",
+    category=UserWarning,
+)

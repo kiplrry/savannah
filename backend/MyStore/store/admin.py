@@ -4,10 +4,10 @@ from .models import Order, Customer, Product, OrderItem
 
 admin.site.register([ Customer])
 
-class OrderItemInline(admin.TabularInline):  # or admin.StackedInline for bigger forms
+class OrderItemInline(admin.TabularInline): 
     model = OrderItem
-    extra = 1  # how many empty rows to show by default
-    autocomplete_fields = ["product"]  # nice dropdown for product
+    extra = 1 
+    autocomplete_fields = ["product"]  
     readonly_fields = [ "subtotal", "created_at"]
 
 @admin.register(Order)

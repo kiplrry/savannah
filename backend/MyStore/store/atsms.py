@@ -1,15 +1,17 @@
-# store/atsms.py
-import os
 import africastalking
 from django.conf import settings
 import logging
 from .models import Order, Customer
+from django.conf import settings
+
+
+
 
 logger = logging.getLogger(__name__)
 
 def initialize_atsdk():
-    username = "sandbox"
-    api_key = "atsk_48f0ff67325d0927e492db153ce362cee97d4a8c7e166a681d44a991ef44bfc2328e2dfa"
+    username = settings.ATSK_USERNAME
+    api_key = settings.ATSK_API
     if not username or not api_key:
         raise RuntimeError("Africa's Talking credentials not configured (AT_USERNAME/AT_API_KEY)")
     sms = africastalking.SMSService(username, api_key)
