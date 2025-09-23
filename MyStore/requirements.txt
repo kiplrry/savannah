@@ -1,0 +1,16 @@
+africastalking==2.0
+Django==5.0.6
+django_environ==0.12.0
+djangorestframework==3.16.1
+drf_nested_routers==0.95.0
+pytest==8.4.2
+psycopg2-binary==2.9.10
+gunicorn==22.0.0
+drf-spectacular==0.28.0
+drf-spectacular-sidecar==2025.9.1
+djangorestframework_simplejwt==5.5.1
+pytest-django==4.11.1
+dj-rest-auth==7.0.1
+django-allauth==65.11.2
+cryptography
+whitenoise==6.11.0
