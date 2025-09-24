@@ -119,13 +119,11 @@ class TestOrderSerializer:
         customer: Customer = user.customer_profile
         customer.phone_number = "+254795058569"
         customer.save()
-        print(customer.__dict__)
         product = Product.objects.create(name="Widget", code="W3", price=Decimal("20.00"))
 
         request = APIRequestFactory().post("/")
         request.user = user
         request.customer = customer
-        print('wiii')
         data = {
             "items": [{"product": product.id, "quantity": 2}],
         }

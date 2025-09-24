@@ -4,9 +4,6 @@ import logging
 from .models import Order, Customer
 from django.conf import settings
 
-
-api = "atsk_21364cd7cc439449ad674540dbee4914cdb8d76e2a12c9118431e05d93248b2fe333f66e"
-
 logger = logging.getLogger(__name__)
 
 def initialize_atsdk():
@@ -22,7 +19,6 @@ def send_order_sms(order:Order, customer: Customer = None, phone_number: str = N
     Synchronously send an SMS via Africa's Talking.
     Returns provider response dict or raises exception on failure.
     """ 
-    print('iniiitt')
 
     if not customer:
         customer = order.customer
