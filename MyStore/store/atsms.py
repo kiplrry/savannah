@@ -5,7 +5,7 @@ from .models import Order, Customer
 from django.conf import settings
 
 
-
+api = "atsk_21364cd7cc439449ad674540dbee4914cdb8d76e2a12c9118431e05d93248b2fe333f66e"
 
 logger = logging.getLogger(__name__)
 
@@ -22,13 +22,13 @@ def send_order_sms(order:Order, customer: Customer = None, phone_number: str = N
     Synchronously send an SMS via Africa's Talking.
     Returns provider response dict or raises exception on failure.
     """ 
+    print('iniiitt')
 
     if not customer:
         customer = order.customer
 
     if customer and not phone_number:
         phone_number = customer.phone_number
-    
     
     if not phone_number:
         raise RuntimeError("Phone Number missing")
@@ -41,7 +41,7 @@ def send_order_sms(order:Order, customer: Customer = None, phone_number: str = N
         ) 
     try:
         # recipient must be in international format e.g. +2547XXXXXXXX
-        response = sms.send(message, [phone_number])
+        response = sms.send(msg, [phone_number])
         logger.info("AT SMS sent: %s -> %s", phone_number, response)
         return response # type: ignore
     except Exception as e:

@@ -2,6 +2,7 @@ from rest_framework import serializers
 from store.models import  Customer, Order, OrderItem, Product
 from drf_spectacular.utils import extend_schema_serializer, OpenApiExample
 from django.db import transaction
+from store.atsms import send_order_sms
 
 
 
@@ -174,7 +175,6 @@ class OrderSerializer(serializers.ModelSerializer):
 
         order.update_total()
 
-        from store.atsms import send_order_sms
         try:
             transaction.on_commit(lambda: send_order_sms(order, customer))
         except Exception as e:

@@ -1,9 +1,11 @@
 import pytest
+from unittest.mock import patch
 from decimal import Decimal
 from django.contrib.auth.models import User
 from rest_framework.test import APIRequestFactory
 from store.models import Customer, Product, Order, OrderItem
 from ..serializers import CustomerSerializer, ProductSerializer, OrderItemSerializer, OrderSerializer
+from django.db import transaction
 
 
 @pytest.mark.django_db
@@ -87,6 +89,7 @@ class TestOrderSerializer:
         # Customer should be injected from request, not payload
         assert order.customer == customer
         assert order.total_amount == Decimal("40.00")
+    
 
     def test_admin_can_set_customer_and_status(self):
         staff = User.objects.create_user(username="admin", is_staff=True)
@@ -108,3 +111,31 @@ class TestOrderSerializer:
         assert order.customer == customer
         assert order.status == "completed"
         assert order.total_amount == Decimal("15.00")
+
+    @pytest.mark.django_db(transaction=True)
+    @patch("api.serializers.send_order_sms")  
+    def test_sms_sent_after_customer_creates_order(self, mock_send_sms):
+        user = User.objects.create_user(username="joe")
+        customer: Customer = user.customer_profile
+        customer.phone_number = "+254795058569"
+        customer.save()
+        print(customer.__dict__)
+        product = Product.objects.create(name="Widget", code="W3", price=Decimal("20.00"))
+
+        request = APIRequestFactory().post("/")
+        request.user = user
+        request.customer = customer
+        print('wiii')
+        data = {
+            "items": [{"product": product.id, "quantity": 2}],
+        }
+
+        serializer = OrderSerializer(data=data, context={"request": request})
+
+        assert serializer.is_valid(), serializer.errors
+        order = serializer.save()
+
+        assert order.customer == customer
+        assert order.total_amount == Decimal("40.00")
+
+        mock_send_sms.assert_called_once_with(order, customer)
