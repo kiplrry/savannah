@@ -127,6 +127,7 @@ REST_USE_JWT = True
 JWT_AUTH_COOKIE = "access"
 JWT_AUTH_REFRESH_COOKIE = "refresh"
 
+
 SPECTACULAR_SETTINGS = {
     "TITLE": "MyStore API",
     "DESCRIPTION": "API for MyStore",
