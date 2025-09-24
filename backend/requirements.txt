@@ -1,6 +1,0 @@
-africastalking==2.0
-Django==5.0.6
-djangorestframework==3.16.1
-drf_nested_routers==0.95.0
-pytest==8.4.2
-python-dotenv==1.1.1
