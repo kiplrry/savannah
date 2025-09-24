@@ -32,6 +32,11 @@ DEBUG = env("DEBUG", default=True)
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
 
+CSRF_TRUSTED_ORIGINS = env.list(
+    "CSRF_TRUSTED_ORIGINS",
+    default=["http://localhost:8000"]
+)
+
 # Database: uses DATABASE_URL if provided, otherwise fallback to SQLite
 DATABASES = {
     "default": env.db(
@@ -83,7 +88,7 @@ DJ_REST_AUTH = {
 # SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = "Lax"  # or "Strict"
-CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",  

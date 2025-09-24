@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: django-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: migrate
+          image: kiplarry/store-app:latest
+          command: ["sh", "-c", "python manage.py migrate --noinput && python manage.py ensure_superuser"]
+          envFrom:
+            - secretRef:
+                name: django-env
+      restartPolicy: OnFailure

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-app
+spec:
+  replicas: 1   # scale Gunicorn pods
+  selector:
+    matchLabels:
+      app: django
+  template:
+    metadata:
+      labels:
+        app: django
+    spec:
+      containers:
+        - name: django
+          image: kiplarry/store-app:latest
+          command:  ["gunicorn", "MyStore.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]
+          envFrom:
+            - secretRef:
+                name: django-env
+          ports:
+            - containerPort: 8000
