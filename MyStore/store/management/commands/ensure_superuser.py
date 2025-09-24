@@ -5,7 +5,6 @@ import os
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         User = get_user_model()
-        if os.getenv('CREATE_SUPERUSER', False) is not True: return
         username = os.getenv("DJANGO_SUPERUSER_USERNAME", "admin")
         email = os.getenv("DJANGO_SUPERUSER_EMAIL", "admin@example.com")
         password = os.getenv("DJANGO_SUPERUSER_PASSWORD", "adminpass")
