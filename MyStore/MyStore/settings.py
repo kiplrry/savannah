@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import environ
 import os
+import sentry_sdk
 import warnings
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,6 +37,14 @@ CSRF_TRUSTED_ORIGINS = env.list(
     "CSRF_TRUSTED_ORIGINS",
     default=["http://localhost:8000"]
 )
+
+sentry_sdk.init(
+    dsn=env("SENTRY_DSN"),
+    # Add data like request headers and IP for users,
+    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+    send_default_pii=True,
+)
+
 
 # Database: uses DATABASE_URL if provided, otherwise fallback to SQLite
 DATABASES = {
