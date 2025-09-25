@@ -47,17 +47,20 @@ class CustomerSerializer(serializers.ModelSerializer):
     examples=[
         OpenApiExample(
             "Read-only for normal users",
-            value={"id": 1, "name": "Widget", "code": "P001", "price": "10.00"},
-            summary="Normal users can only read products"
+            value={"id": 1, "name": "Widget", "code": "P001", "description":"Nice widget", "price": "10.00"},
+            summary="Normal users can only read products",
+            response_only=True
         ),
         OpenApiExample(
             "Admin create product",
-            value={"name": "Widget", "code": "P001", "price": "10.00"},
-            summary="Only admins can create products"
+            value={"name": "Widget", "code": "P001", "description":"Nice widget","price": "10.00"},
+            summary="Only admins can create products",
+            request_only=True
         ),
     ]
 )
 class ProductSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
     class Meta:
         model = Product
         fields = "__all__"

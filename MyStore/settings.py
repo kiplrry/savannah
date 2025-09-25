@@ -89,8 +89,8 @@ SITE_ID = 2
 # ACCOUNT_EMAIL_VERIFICATION = "none" 
 ACCOUNT_LOGIN_METHODS = {"username", "email"}  # allow login with both
 ACCOUNT_SIGNUP_FIELDS = ["username*", "email*", "password1*", "password2*"]
-LOGIN_REDIRECT_URL = "/api"
-LOGOUT_REDIRECT_URL = "/api"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 DJ_REST_AUTH = {
     "LOGOUT_ON_GET": False,  

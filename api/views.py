@@ -38,8 +38,7 @@ class CustomerViewSet(viewsets.ModelViewSet):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [IsAdminOrReadOnly]
-    authentication_classes = []
+    permission_classes = [permissions.AllowAny & IsAdminOrReadOnly]
 
     @extend_schema(
         description="List products (all users). Only admin can create/update/delete."
@@ -59,15 +58,6 @@ class OrderViewSet(viewsets.ModelViewSet):
         return Order.objects.filter(customer__user=self.request.user).select_related("customer", "customer__user")
 
 
-# class OrderItemViewSet(viewsets.ModelViewSet):
-#     queryset = OrderItem.objects.all()
-#     serializer_class = OrderItemSerializer
-#     permission_classes = [permissions.IsAuthenticated, IsAdminOrOwner]
-#     def get_queryset(self):
-#         if self.request.user.is_staff:
-#             return OrderItem.objects.all()
-#         return OrderItem.objects.filter(order__customer__user=self.request.user).select_related("customer", "customer__user")
-    
 class OrderItemViewSet(viewsets.ModelViewSet):
     queryset = OrderItem.objects.select_related("order__customer", "product")
     serializer_class = OrderItemSerializer
