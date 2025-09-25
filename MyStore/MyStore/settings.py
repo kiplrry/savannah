@@ -31,7 +31,7 @@ SECRET_KEY = env("SECRET_KEY", default="unsafe-secret-key")
 
 DEBUG = env("DEBUG", default=True)
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
 
 CSRF_TRUSTED_ORIGINS = env.list(
     "CSRF_TRUSTED_ORIGINS",
