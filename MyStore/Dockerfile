@@ -13,7 +13,8 @@ COPY . /app
 
 EXPOSE 8000
 
-CMD ["gunicorn", "MyStore.wsgi:application", "--bind", "0.0.0.0:${PORT}", "--workers", "4"]
+CMD gunicorn MyStore.wsgi:application --bind 0.0.0.0:$PORT --workers 4
+
 
 RUN 
 
