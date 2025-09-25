@@ -9,21 +9,25 @@ from store.atsms import send_order_sms
 @extend_schema_serializer(
     examples=[
         OpenApiExample(
-            "Normal user ",
-            summary="Normal User",
+            "All Users",
+            summary="All Users",
             value={
                 "name": "string",
                 "phone_number": "string",
+                "email": "user@example.com"
             },
+            response_only=True
         ),
         OpenApiExample(
             "Admin/staff",
             summary="Admin/staff",
             value={
+                "user_id": "int",
                 "name": "string",
                 "phone_number": "string",
                 "email": "user@example.com",
             },
+            request_only=True
         ),
     ]
 )
