@@ -9,9 +9,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: MyStore
 
     services:
       postgres:
@@ -84,7 +81,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ./MyStore
           push: true
           tags: |
             kiplarry/store-app:latest
