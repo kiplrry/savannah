@@ -14,3 +14,4 @@ dj-rest-auth==7.0.1
 django-allauth==65.11.2
 cryptography
 whitenoise==6.11.0
+sentry-sdk==2.38.0
