@@ -38,12 +38,15 @@ CSRF_TRUSTED_ORIGINS = env.list(
     default=["http://localhost:8000"]
 )
 
-sentry_sdk.init(
-    dsn=env("SENTRY_DSN"),
-    # Add data like request headers and IP for users,
-    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
-    send_default_pii=True,
-)
+SENTRY_DSN = env("SENTRY_DSN", default=None)
+
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        # Add data like request headers and IP for users,
+        # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+        send_default_pii=True,
+    )
 
 
 # Database: uses DATABASE_URL if provided, otherwise fallback to SQLite
