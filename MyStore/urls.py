@@ -17,10 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+def sentry_debug(request):
+    div  = 0/1
 
 
 urlpatterns = [
+
     path("", include("store.urls")),
+    path("sentry-debug/", sentry_debug),
     path('admin/', admin.site.urls),
     path("api/", include("api.urls")),
     path("auth/", include("dj_rest_auth.urls")),                
