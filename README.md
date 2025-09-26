@@ -23,6 +23,7 @@ This project demonstrates a **modern development stack** including:
 - OAutb / Social login via `django-allauth`
 - Auto-generated API docs with Swagger (drf-spectacular)
 - CI/CD with GitHub Actions
+- Monitoring via Sentry
 - Deployable via Docker & Kubernetes
 
 ---
@@ -157,6 +158,15 @@ vi .env.prod
 # Edit with your keys (SECRET_KEY, DB, ATSK, etc.)
 ```
 
+### Tip
+
+Make sure to migrate if using a new db. And create a super user too.
+You can simply run the entrypoint file:
+
+```bash
+./entrypoint.sh
+```
+
 🔑 Environment Variables
 
 | Name | Description |
@@ -164,8 +174,9 @@ vi .env.prod
 | `DEBUG` | Debug mode (`True`/`False`) |
 | `DATABASE_URL` | DB connection string |
 | `ATSK_API` | Africa’s Talking SMS API key |
+| `SENTRY_DSN` | Sentry DSN URL (Monitoring) |
 
-For when you want to aytocreate superuser
+For when you want to autocreate superuser
 
 ```bash
 python3 manage.py ensure_superuser
@@ -260,3 +271,7 @@ Run locally with:
 ```bash
 pytest -v
 ```
+
+# 🔎 Monitoring
+
+I use **Sentry** for monitoring. Configure the the `SENTRY_DSN`key in the env file
